@@ -20,27 +20,25 @@ namespace TabacariaSystem.Controllers
         }
 
         // GET: Produtos
-        public async Task<IActionResult> Index()
+     
+        public async Task<IActionResult> Index(string pesquisa)
         {
-            return View(await _context.Produtos.ToListAsync());
-        }
+            // Pega todos os produtos do banco
+            var produtos = from p in _context.Produtos
+                           select p;
 
-        // GET: Produtos/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+            // Verifica se o usuário digitou algo
+            if (!string.IsNullOrEmpty(pesquisa))
             {
-                return NotFound();
+                // Filtra os produtos pelo nome
+                // Exemplo: se digitar "Ignite"
+                // ele procura produtos que contenham "Ignite"
+                produtos = produtos.Where(p =>
+                    p.Nome.Contains(pesquisa));
             }
 
-            var produto = await _context.Produtos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (produto == null)
-            {
-                return NotFound();
-            }
-
-            return View(produto);
+            // Envia a lista filtrada para a View
+            return View(await produtos.ToListAsync());
         }
 
         // GET: Produtos/Create

@@ -1,9 +1,16 @@
-﻿public class Venda
+﻿using TabacariaSystem.Models;
+public class Venda
 {
     public int Id { get; set; }
+
     public int ClienteId { get; set; }
+    public Cliente? Cliente { get; set; }
+
     public int ProdutoId { get; set; }
+    public Produto? Produto { get; set; }
+
     public int Quantidade { get; set; }
-    public decimal ValorTotal { get; set; }
-    public DateTime DataVenda { get; set; }
+    public decimal? ValorTotal { get; set; }
+
+    public DateTime? DataVenda { get; set; } = DateTime.Now;
 }

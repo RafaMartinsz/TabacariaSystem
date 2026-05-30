@@ -1,8 +1,91 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Início";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mt-5">
+
+    <h1 class="fw-bold text-dark">
+        Tabacaria Hub
+    </h1>
+
+    <p class="lead text-secondary">
+        Sistema de gerenciamento de produtos, clientes e vendas.
+    </p>
+
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-md-4 mb-4">
+        <div class="card shadow border-0 h-100">
+
+            <div class="card-body text-center">
+
+                <h3 class="fw-bold text-dark">
+                    Produtos
+                </h3>
+
+                <p class="text-secondary">
+                    Controle total do estoque da tabacaria.
+                </p>
+
+                <a asp-controller="Produtos"
+                   asp-action="Index"
+                   class="btn btn-success">
+                    Acessar
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card shadow border-0 h-100">
+
+            <div class="card-body text-center">
+
+                <h3 class="fw-bold text-dark">
+                    Clientes
+                </h3>
+
+                <p class="text-secondary">
+                    Cadastro e gerenciamento de clientes.
+                </p>
+
+                <a asp-controller="Clientes"
+                   asp-action="Index"
+                   class="btn btn-success">
+                    Acessar
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card shadow border-0 h-100">
+
+            <div class="card-body text-center">
+
+                <h3 class="fw-bold text-dark">
+                    Vendas
+                </h3>
+
+                <p class="text-secondary">
+                    Controle e registro de vendas realizadas.
+                </p>
+
+                <a asp-controller="Vendas"
+                   asp-action="Index"
+                   class="btn btn-success">
+                    Acessar
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
 </div>

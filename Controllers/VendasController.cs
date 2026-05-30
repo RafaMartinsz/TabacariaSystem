@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using TabacariaSystem.Data;
 
 namespace TabacariaSystem.Controllers
@@ -21,7 +22,10 @@ namespace TabacariaSystem.Controllers
         // GET: Vendas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Vendas.ToListAsync());
+            return View(await _context.Vendas
+     .Include(v => v.Cliente)
+     .Include(v => v.Produto)
+     .ToListAsync());
         }
 
         // GET: Vendas/Details/5
@@ -33,7 +37,9 @@ namespace TabacariaSystem.Controllers
             }
 
             var venda = await _context.Vendas
-                .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(v => v.Cliente)
+            .Include(v => v.Produto)
+            .FirstOrDefaultAsync(m => m.Id == id);
             if (venda == null)
             {
                 return NotFound();
@@ -45,25 +51,87 @@ namespace TabacariaSystem.Controllers
         // GET: Vendas/Create
         public IActionResult Create()
         {
+            ViewBag.Clientes = new SelectList(
+                _context.Clientes,
+                "Id",
+                "Nome"
+            );
+
+            // MOSTRA SOMENTE PRODUTOS COM ESTOQUE
+            ViewBag.Produtos = new SelectList(
+                _context.Produtos.Where(p => p.Quantidade > 0),
+                "Id",
+                "Nome"
+            );
+
             return View();
         }
 
         // POST: Vendas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Vendas/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClienteId,ProdutoId,Quantidade,ValorTotal,DataVenda")] Venda venda)
+        public async Task<IActionResult> Create(Venda venda)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(venda);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(venda);
-        }
+            // Procura o produto no banco
+            var produto = await _context.Produtos.FindAsync(venda.ProdutoId);
 
+            // Verifica se o produto existe
+            if (produto == null)
+            {
+                ModelState.AddModelError("", "Produto não encontrado.");
+
+                // Recarrega os dropdowns
+                ViewBag.Clientes = new SelectList(_context.Clientes, "Id", "Nome");
+                ViewBag.Produtos = new SelectList(
+                    _context.Produtos.Where(p => p.Quantidade > 0),
+                    "Id",
+                    "Nome"
+                );
+
+                return View(venda);
+            }
+
+            // Verifica se o estoque é suficiente
+            if (produto.Quantidade < venda.Quantidade)
+            {
+                ModelState.AddModelError("",
+                    $"Estoque insuficiente. Disponível: {produto.Quantidade}");
+
+                // Recarrega os dropdowns
+                ViewBag.Clientes = new SelectList(_context.Clientes, "Id", "Nome");
+
+                ViewBag.Produtos = new SelectList(
+                    _context.Produtos.Where(p => p.Quantidade > 0),
+                    "Id",
+                    "Nome"
+                );
+
+                return View(venda);
+            }
+
+            // Calcula valor total da venda
+            venda.ValorTotal = produto.Preco * venda.Quantidade;
+
+            // Atualiza estoque
+            produto.Quantidade -= venda.Quantidade;
+
+            // Salva data da venda
+            venda.DataVenda = DateTime.Now;
+
+            // Adiciona venda no banco
+            _context.Vendas.Add(venda);
+
+            // Salva tudo no banco
+            await _context.SaveChangesAsync();
+
+            // Volta para lista de vendas
+            return RedirectToAction(nameof(Index));
+       
+        }
         // GET: Vendas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -124,7 +192,9 @@ namespace TabacariaSystem.Controllers
             }
 
             var venda = await _context.Vendas
-                .FirstOrDefaultAsync(m => m.Id == id);
+    .Include(v => v.Cliente)
+    .Include(v => v.Produto)
+    .FirstOrDefaultAsync(m => m.Id == id);
             if (venda == null)
             {
                 return NotFound();
