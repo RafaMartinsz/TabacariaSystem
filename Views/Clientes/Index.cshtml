@@ -4,27 +4,30 @@
     ViewData["Title"] = "Clientes";
 }
 
-<h1>Clientes</h1>
+<!-- Título limpo e com peso idêntico ao de Produtos -->
+<h1 class="display-6 fw-bold mb-4">Clientes</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-success">
+    <!-- Botão verde com a classe fw-semibold igual ao resto do sistema -->
+    <a asp-action="Create" class="btn btn-success fw-semibold px-3 mb-4">
         Novo Cliente
     </a>
 </p>
 
-<table class="table">
+<!-- Tabela com alinhamento vertical corrigido -->
+<table class="table align-middle">
     <thead>
-        <tr>
-            <th>
+        <tr class="text-dark">
+            <th style="font-weight: 600;">
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
-            <th>
+            <th style="font-weight: 600;">
                 @Html.DisplayNameFor(model => model.Telefone)
             </th>
-            <th>
+            <th style="font-weight: 600;">
                 @Html.DisplayNameFor(model => model.CPF)
             </th>
-            <th></th>
+            <th style="font-weight: 600;">Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -40,8 +43,9 @@
                 @Html.DisplayFor(modelItem => item.CPF)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                <!-- Links antigos transformados nos botões modernos da imagem -->
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info px-3 me-1" style="color: #0dcaf0;">Detalhes</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger px-3">Excluir</a>
             </td>
         </tr>
 }

@@ -1,0 +1,46 @@
+@model TabacariaSystem.Models.Usuario
+
+@{
+    ViewData["Title"] = "Editar Usuário";
+}
+
+<h1 class="display-6 fw-bold mb-4">Editar</h1>
+
+<h4 class="fs-5 fw-bold text-dark">Usuário</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        @if (ViewBag.Erro != null)
+        {
+            <div class="alert alert-danger py-2" role="alert">
+                @ViewBag.Erro
+            </div>
+        }
+
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label for="nomeUsuario" class="form-label fw-bold text-dark small">Nome de Usuário</label>
+                <input type="text" name="nomeUsuario" id="nomeUsuario" class="form-control" value="@Model.NomeUsuario" required />
+            </div>
+
+            <div class="form-group mb-4">
+    <label for="novaSenha" class="form-label fw-bold text-dark small">Nova Senha</label>
+    <div class="input-group">
+        <input type="password" name="novaSenha" id="novaSenha" class="form-control" placeholder="Deixe em branco para não alterar" />
+        <button class="btn btn-outline-secondary" type="button" id="btnMostrarNovaSenha" onclick="toggleSenha('novaSenha')">
+            👁️
+        </button>
+    </div>
+    <span class="text-muted" style="font-size: 0.75rem;">Só preencha se quiser mudar a senha atual deste usuário.</span>
+</div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary fw-semibold px-4 me-2" style="background-color: #0dcaf0; border-color: #0dcaf0;">Salvar</button>
+                <a asp-action="Usuarios" class="text-decoration-none small text-secondary">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+@model IEnumerable<TabacariaSystem.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Usuários";
+}
+
+<h1 class="display-6 fw-bold mb-4">Usuários</h1>
+
+<p>
+    <a asp-action="Registrar" class="btn btn-success fw-semibold px-3 mb-4">Novo Usuário</a>
+</p>
+
+@if (TempData["ErroExclusao"] != null)
+{
+    <div class="alert alert-warning py-2" role="alert">
+        @TempData["ErroExclusao"]
+    </div>
+}
+
+<table class="table align-middle">
+    <thead>
+        <tr class="text-dark">
+            <th style="font-weight: 600;">ID</th>
+            <th style="font-weight: 600;">Nome de Usuário</th>
+            <th style="font-weight: 600;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.NomeUsuario</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-info px-3 me-1" style="color: #0dcaf0;">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-outline-danger px-3">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

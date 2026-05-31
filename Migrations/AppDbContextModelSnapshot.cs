@@ -74,6 +74,89 @@ namespace TabacariaSystem.Migrations
                     b.ToTable("Produtos");
                 });
 
+            modelBuilder.Entity("TabacariaSystem.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NomeUsuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 101,
+                            NomeUsuario = "admin",
+                            Senha = "AQAAAAIAAYagAAAAELxld7HM64sRGoyVtxl4I0aJt/xH0bmghZSuugzLk02P/a5QgMj8YCUkx1tHLN1hLQ=="
+                        },
+                        new
+                        {
+                            Id = 102,
+                            NomeUsuario = "carlos",
+                            Senha = "AQAAAAIAAYagAAAAEHuMJrkOg2ER2lC9oE0KoD/j2FURz9px5B7Xd4UdLM9T98Jokf99yG4RzEYZgYx6ew=="
+                        },
+                        new
+                        {
+                            Id = 103,
+                            NomeUsuario = "mariana",
+                            Senha = "AQAAAAIAAYagAAAAEBn+/1VV2CRi5IhyP7B+JMr4HrXrsE3cLZd9eV8JhvXpMR5Vpv2kN1HacI07xMi7HA=="
+                        },
+                        new
+                        {
+                            Id = 104,
+                            NomeUsuario = "fernanda",
+                            Senha = "AQAAAAIAAYagAAAAEP+aoE07yhVXWE7h7RgX/FzYiUrQYoIT8QQG/oNXV+tsnG2AC0l4/vGsluhr1Wxu2Q=="
+                        },
+                        new
+                        {
+                            Id = 105,
+                            NomeUsuario = "roberto",
+                            Senha = "AQAAAAIAAYagAAAAEGXQ9ukCHoo7E6iU8jz++zMPXJ3917uDMa46C5GpA2YYFCfjUMcDxNWqI72xaG29tQ=="
+                        },
+                        new
+                        {
+                            Id = 106,
+                            NomeUsuario = "juliana",
+                            Senha = "AQAAAAIAAYagAAAAENStaL3pDmoWCjlC4hO02bEOzhDwHxnGz7tS1XlH9T+e6Iok5sSd5w37v19pudn8BA=="
+                        },
+                        new
+                        {
+                            Id = 107,
+                            NomeUsuario = "lucas",
+                            Senha = "AQAAAAIAAYagAAAAEB16gsyYpwVCT0ZMg393DJoZ3XhRmveGupd4zOwbNNyCox/+k91nFNK1uu66eRislQ=="
+                        },
+                        new
+                        {
+                            Id = 108,
+                            NomeUsuario = "beatriz",
+                            Senha = "AQAAAAIAAYagAAAAEKATtl7rcOiFfPlnK+0RYsuk/MRbcOwIS+wdBdbXw0u9z1Ae3hULpV7+ALU735xCLw=="
+                        },
+                        new
+                        {
+                            Id = 109,
+                            NomeUsuario = "ricardo",
+                            Senha = "AQAAAAIAAYagAAAAEG8WDj/YJMWo24UvdBnXl9XjTv2TRvw25euJHzigLUtIK8hGbG5NZhPz3zHnWdDiHw=="
+                        },
+                        new
+                        {
+                            Id = 110,
+                            NomeUsuario = "amanda",
+                            Senha = "AQAAAAIAAYagAAAAEIo/pDwW2h5M2KZUK9D85FxcSbvp3LxahY9mPwqQgm9fBax4mFnxWIdljIHf+WiHGw=="
+                        });
+                });
+
             modelBuilder.Entity("Venda", b =>
                 {
                     b.Property<int>("Id")
@@ -85,7 +168,7 @@ namespace TabacariaSystem.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataVenda")
+                    b.Property<DateTime?>("DataVenda")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ProdutoId")
@@ -94,7 +177,7 @@ namespace TabacariaSystem.Migrations
                     b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("ValorTotal")
+                    b.Property<decimal?>("ValorTotal")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");

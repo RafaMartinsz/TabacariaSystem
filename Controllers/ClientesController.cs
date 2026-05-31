@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TabacariaSystem.Data;
 using TabacariaSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TabacariaSystem.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly AppDbContext _context;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using TabacariaSystem.Data;
 
 namespace TabacariaSystem.Controllers
 {
+    [Authorize]
     public class VendasController : Controller
     {
         private readonly AppDbContext _context;
